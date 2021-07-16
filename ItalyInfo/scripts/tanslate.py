@@ -98,14 +98,14 @@ def main(args):
 if __name__ == '__main__':
     conf = {
         'baidu': {
-            'appid': '',
-            'password': '',
-            'salt': ''
+            'appid': '20210714000887983',
+            'password': 'm0kLLH4o0HgWKLLKDYvC',
+            'salt': '1435660288'
         },
         'mongodb': {
-            'host': 'mongodb://192.168.2.251:20365/',
-            'table': 'crawlab_test',
-            'collection': 'italy'
+            'host': 'localhost',
+            'table': 'Italy',
+            'collection': 'ItalyInfo'
         }
     }
     parser = argparse.ArgumentParser()

@@ -11,9 +11,10 @@ logger = logging.getLogger(__name__)
 class LarepubblicaSpider(scrapy.Spider):
     name = 'LaRepubblica'
     # allowed_domains = ['ricerca.repubblica.it/ricerca/repubblica?query=La+Belt+and+Road+Initiative']
-    start_urls = ['https://ricerca.repubblica.it/ricerca/repubblica?query=La+Belt+and+Road+Initiative%2F']
-    for i in range(2, 101):
-        start_urls.append(start_urls[0] + '&page=' + str(i))
+    start_urls = ['https://ricerca.repubblica.it/ricerca/repubblica']
+
+    for i in range(2, 50):
+        start_urls.append(start_urls[0] + '?page=' + str(i))
 
     def parse(self, response):
         headers = {
@@ -45,6 +46,7 @@ class LarepubblicaSpider(scrapy.Spider):
         content = html('article p').text()
         author = html('article em').text()
         date = response.css('time::attr(datetime)').extract()
+        date = date[0][:10]
 
         logger.info("-----------------")
         logger.info(response.meta['url'])
@@ -53,10 +55,10 @@ class LarepubblicaSpider(scrapy.Spider):
 
         item = ItalyInfoItem()
         item['url'] = response.meta['url']
-        item['source'] = "共和国报"
+        item['source'] = "意大利共和国报"
         item['title'] = title
         item['content'] = content
         item['author'] = author
-        item['published_at'] = str(date[0]) + " 00:00:00"
+        item['published_at'] = str(date) + " 00:00:00"
         item['language'] = "it"
         yield item
